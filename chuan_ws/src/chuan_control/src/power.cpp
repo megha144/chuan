@@ -1,4 +1,5 @@
 // //xx
+//https://github.com/derekmolloy/boneDeviceTree/
 // //键盘键 ‘1’ ‘2’  控制电源开关
 #include "stdio.h"
 #include "stdlib.h"
