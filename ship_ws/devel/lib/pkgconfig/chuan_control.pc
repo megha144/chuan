@@ -1,0 +1,8 @@
+prefix=/home/xx/commonspace/ship_ws/devel
+
+Name: chuan_control
+Description: Description of chuan_control
+Version: 0.0.0
+Cflags: -I/home/xx/commonspace/ship_ws/src/chuan_control/include
+Libs: -L/home/xx/commonspace/ship_ws/devel/lib 
+Requires: roscpp rospy std_msgs darknet_ros_msgs jsk_recognition_msgs

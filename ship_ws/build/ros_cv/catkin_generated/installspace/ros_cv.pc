@@ -1,0 +1,8 @@
+prefix=/home/xx/commonspace/ship_ws/install
+
+Name: ros_cv
+Description: Description of ros_cv
+Version: 0.0.0
+Cflags: 
+Libs: -L/home/xx/commonspace/ship_ws/install/lib 
+Requires: 

@@ -1,0 +1,2 @@
+chuan_control:chuan_nav:darknet_ros_msgs:euclidean_cluster:jsk_recognition_msgs:pcl_test:ros_cv:turtlebot_teleop:xx_msgs
+-DCATKIN_DEVEL_PREFIX=/home/xx/commonspace/ship_ws/devel -DCMAKE_INSTALL_PREFIX=/home/xx/commonspace/ship_ws/install -G Unix Makefiles

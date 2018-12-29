@@ -1,0 +1,8 @@
+prefix=/home/xx/commonspace/chuan_nav_ws/install
+
+Name: hokuyo_node
+Description: Description of hokuyo_node
+Version: 1.7.8
+Cflags: -I/home/xx/commonspace/chuan_nav_ws/install/include
+Libs: -L/home/xx/commonspace/chuan_nav_ws/install/lib -llibhokuyo
+Requires: rosconsole
