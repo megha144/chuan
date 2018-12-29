@@ -12,3 +12,8 @@ flag_xx 测试：
 
 rosrun chuan_control flag_server
 rosrun chuan_control flag_client
+
+激光box跟随测试：
+./box_pub.sh
+./box_gensui.sh
+
