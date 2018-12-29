@@ -1,5 +1,6 @@
 // //xx
 //https://github.com/derekmolloy/boneDeviceTree/
+//  https://www.cnblogs.com/einstein-2014731/p/6876580.html
 // //键盘键 ‘1’ ‘2’  控制电源开关
 #include "stdio.h"
 #include "stdlib.h"
