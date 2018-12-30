@@ -2,6 +2,7 @@
 // box_lidar_points 
 //获取激光点云的box 并跟踪最近的物体 
 //添加控制权交接
+//能控制小车运动
 
 // darknet_ros_msgs
 #include <jsk_recognition_msgs/BoundingBox.h>
@@ -29,9 +30,9 @@ ros::Publisher flag_3dlidar2cv_pub;//发布从3dliar to cv 的标记
 
 float distance_xy_min,distance_xy_tmp,distance_now;
 int j;
-const float distance_goal=7;
-const float line_scale_x = 0.001;
-const float y_scale = 0.01;
+const float distance_goal=1;
+const float line_scale_x = 0.1;
+const float y_scale = 0.1;
 void box_lidar_yoloCallback(const jsk_recognition_msgs::BoundingBoxArray::ConstPtr& box_msg)
 {
     //接收到的点云是在半径60m 的前半圆体内
@@ -49,19 +50,19 @@ void box_lidar_yoloCallback(const jsk_recognition_msgs::BoundingBoxArray::ConstP
         distance_xy_min = sqrt(pow(box_msg->boxes[0].pose.position.x,2) + pow(box_msg->boxes[0].pose.position.y,2));
         for(int i=0; i<box_msg->boxes.size();i++)
         {   
-            std::cout<<i<<" box center x = "<< box_msg->boxes[i].pose.position.x <<std::endl;
-            std::cout<<i<<" box center y = "<< box_msg->boxes[i].pose.position.y <<std::endl;
-            std::cout<<i<<" box center z = "<< box_msg->boxes[i].pose.position.z <<std::endl;
-            std::cout<<i<<" box length x = "<< box_msg->boxes[i].dimensions.x <<std::endl;
-            std::cout<<i<<" box width y = "<< box_msg->boxes[i].dimensions.y <<std::endl;
-            std::cout<<i<<" box height z = "<< box_msg->boxes[i].dimensions.z <<std::endl;
-            std::cout<<"-------------------------------------"<<std::endl;
+            // std::cout<<i<<" box center x = "<< box_msg->boxes[i].pose.position.x <<std::endl;
+            // std::cout<<i<<" box center y = "<< box_msg->boxes[i].pose.position.y <<std::endl;
+            // std::cout<<i<<" box center z = "<< box_msg->boxes[i].pose.position.z <<std::endl;
+            // std::cout<<i<<" box length x = "<< box_msg->boxes[i].dimensions.x <<std::endl;
+            // std::cout<<i<<" box width y = "<< box_msg->boxes[i].dimensions.y <<std::endl;
+            // std::cout<<i<<" box height z = "<< box_msg->boxes[i].dimensions.z <<std::endl;
+            // std::cout<<"-------------------------------------"<<std::endl;
             // std::cout<<"box label = "<< box_msg->boxes[i].label;
             // std::cout<<"box value = "<< box_msg->boxes[i].value;
 
 
             distance_xy_tmp = sqrt(pow(box_msg->boxes[i].pose.position.x,2) + pow(box_msg->boxes[i].pose.position.y,2));
-            if(distance_xy_tmp >5)
+            if(distance_xy_tmp >7)
             {
                 continue; // <5  or > 50m 不做处理
             }
@@ -81,6 +82,8 @@ void box_lidar_yoloCallback(const jsk_recognition_msgs::BoundingBoxArray::ConstP
             // 朝左了 向右偏， 朝右了，向左偏
             cmd->angular.z = box_msg->boxes[j].pose.position.y * y_scale;
             vel_pub.publish(cmd);
+            std::cout<<"box_vx= "<<cmd->linear.x<<"  box_vz= "<<cmd->angular.z<<std::endl;
+
         }
         else    // box在 < 7m 的位置时 停止
         {
@@ -103,11 +106,14 @@ int main(int argc, char **argv)
 {
 
   ros::init(argc, argv, "box_lidar_points");
-  ros::NodeHandle n;
+  ros::NodeHandle n,n1;
   //当 /box_lidar_points 没有发布时 不会进行box 的寻找
   ros::Subscriber sub = n.subscribe("/box_lidar_points", 1, box_lidar_yoloCallback);
   //ros::Rate loop_rate(10);
-  vel_pub = n.advertise<geometry_msgs::Twist>("chuan_vel",10);
+  //vel_pub = n.advertise<geometry_msgs::Twist>("chuan_vel",10);
+ // vel_pub = n.advertise<geometry_msgs::Twist>("cmd_vel_mux/input/teleop",1);
+  vel_pub = n1.advertise<geometry_msgs::Twist>("/mobile_base/commands/velocity",100);
+
   flag_lidar_pub = n.advertise<xx_msgs::Flag>("flag_nav_to_3dlidar",1);  //发布3dlidar停止标志
   flag_3dlidar2cv_pub = n.advertise<xx_msgs::Flag>("flag_3dlidar_to_cv",1); //发布向图像运行的标志
 
