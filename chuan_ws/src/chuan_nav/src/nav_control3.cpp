@@ -31,9 +31,9 @@ int flag_3dlidar_to_cv_status;  //3d及
 int current_point=0;  //当前导航点
 int current_status=0,last_current_status=0;
 double nav_point[3][4]={
-0,0,0,1,     //yuan dian
-2.669,-0.169,-0.047,0.999,
-3.385,2.632,0.104,0.994,
+//0,0,0,1,     //yuan dian
+3.023,-0.458,0.634,0.773,
+3.164,5.525,0.720,0.694,
 };
 
 int goal_n=0;	
@@ -131,9 +131,6 @@ void recv_3dlidar_flag_callback(const xx_msgs::Flag::ConstPtr& msg)
     }
 }
 
-
-
-
 void *pub_point(void *arg)  //发布dian
 {
     while(ros::ok())
@@ -142,15 +139,15 @@ void *pub_point(void *arg)  //发布dian
 	  {
 		flag_cv2nav_status = 0;
         sleep(1);
-		current_point++;
-		if(current_point == 3)   //回到起点
+	//	current_point++;
+		if(current_point == 2)   //回到起点
 		{
 			current_point = 0;  //原点
 			pub_switch();   
 		}
 		cout <<"current_point" << current_point<<endl;
 		pub_switch();  //设置下一个目标点
-		
+		current_point++;
 	  }
     }
 }
