@@ -4,7 +4,7 @@ sudo apt-get install ros-kinetic-navigation
 sudo apt-get install ros-kinetic-turtlebot-msgs
 sudo apt-get install ros-kinetic-joy
 
-注：先编译有msgs的包
+注：先编译有driver-common的包
 **************************************************
 http://www.ncnynl.com/archives/201611/1097.html
 
