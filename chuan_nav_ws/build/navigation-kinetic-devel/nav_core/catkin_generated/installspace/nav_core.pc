@@ -1,8 +1,0 @@
-prefix=/home/xx/commonspace/chuan_nav_ws/install
-
-Name: nav_core
-Description: Description of nav_core
-Version: 1.14.4
-Cflags: -I/home/xx/commonspace/chuan_nav_ws/install/include
-Libs: -L/home/xx/commonspace/chuan_nav_ws/install/lib 
-Requires: std_msgs geometry_msgs tf costmap_2d

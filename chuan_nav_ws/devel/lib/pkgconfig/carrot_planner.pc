@@ -1,8 +1,0 @@
-prefix=/home/xx/commonspace/chuan_nav_ws/devel
-
-Name: carrot_planner
-Description: Description of carrot_planner
-Version: 1.14.4
-Cflags: -I/home/xx/commonspace/chuan_nav_ws/src/navigation-kinetic-devel/carrot_planner/include
-Libs: -L/home/xx/commonspace/chuan_nav_ws/devel/lib -lcarrot_planner
-Requires: roscpp pluginlib costmap_2d base_local_planner nav_core
