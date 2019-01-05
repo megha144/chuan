@@ -1,8 +1,0 @@
-prefix=/home/xx/commonspace/ship_ws/install
-
-Name: euclidean_cluster
-Description: Description of euclidean_cluster
-Version: 0.0.1
-Cflags: -I/home/xx/commonspace/ship_ws/install/include
-Libs: -L/home/xx/commonspace/ship_ws/install/lib 
-Requires: roscpp sensor_msgs pcl_ros std_msgs jsk_recognition_msgs

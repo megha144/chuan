@@ -1,8 +1,0 @@
-prefix=/home/xx/commonspace/ship_ws/devel
-
-Name: chuan_nav
-Description: Description of chuan_nav
-Version: 0.0.0
-Cflags: -I/home/xx/commonspace/ship_ws/src/chuan_nav/include
-Libs: -L/home/xx/commonspace/ship_ws/devel/lib 
-Requires: actionlib geometry_msgs move_base_msgs roscpp std_msgs
