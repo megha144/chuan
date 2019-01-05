@@ -13,7 +13,7 @@
 
 
   <!-- vlp16 driver -->
-  <include file="$(find velodyne_pointcloud)/launch/VLP16_points.launch" />
+  <include file="$(find turtlebot_navigation)/laser/driver/vlp16_laser.launch" />
 
   <!-- Map server -->
   <arg name="map_file" default="/home/xx/map/v1.yaml"/>
