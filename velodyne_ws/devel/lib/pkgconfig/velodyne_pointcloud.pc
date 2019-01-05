@@ -1,8 +1,0 @@
-prefix=/home/xx/commonspace/velodyne_ws/devel
-
-Name: velodyne_pointcloud
-Description: Description of velodyne_pointcloud
-Version: 1.5.0
-Cflags: -I/home/xx/commonspace/velodyne_ws/devel/include -I/home/xx/commonspace/velodyne_ws/src/velodyne-1.5.0/velodyne_pointcloud/include
-Libs: -L/home/xx/commonspace/velodyne_ws/devel/lib -lvelodyne_rawdata
-Requires: angles nodelet pcl_ros roscpp roslib sensor_msgs tf velodyne_driver velodyne_msgs dynamic_reconfigure

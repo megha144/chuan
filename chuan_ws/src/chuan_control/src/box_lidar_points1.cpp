@@ -81,6 +81,8 @@ void box_lidar_yoloCallback(const jsk_recognition_msgs::BoundingBoxArray::ConstP
             cmd->linear.x = (distance_now - distance_goal) * line_scale_x;
             // 朝左了 向右偏， 朝右了，向左偏
             cmd->angular.z = box_msg->boxes[j].pose.position.y * y_scale;
+            if(cmd->linear.x > 0.2) cmd->linear.x = 0.2;
+            if(cmd->angular.z >0.2) cmd->angular.z = 0.2;
             vel_pub.publish(cmd);
             std::cout<<"box_vx= "<<cmd->linear.x<<"  box_vz= "<<cmd->angular.z<<std::endl;
 
@@ -112,7 +114,7 @@ int main(int argc, char **argv)
   //ros::Rate loop_rate(10);
   //vel_pub = n.advertise<geometry_msgs::Twist>("chuan_vel",10);
  // vel_pub = n.advertise<geometry_msgs::Twist>("cmd_vel_mux/input/teleop",1);
-  vel_pub = n1.advertise<geometry_msgs::Twist>("/mobile_base/commands/velocity",100);
+  vel_pub = n1.advertise<geometry_msgs::Twist>("/mobile_base/commands/velocity",10);
 
   flag_lidar_pub = n.advertise<xx_msgs::Flag>("flag_nav_to_3dlidar",1);  //发布3dlidar停止标志
   flag_3dlidar2cv_pub = n.advertise<xx_msgs::Flag>("flag_3dlidar_to_cv",1); //发布向图像运行的标志

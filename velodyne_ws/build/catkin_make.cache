@@ -1,2 +1,0 @@
-velodyne-1.5.0/velodyne:velodyne-1.5.0/velodyne_driver:velodyne-1.5.0/velodyne_laserscan:velodyne-1.5.0/velodyne_msgs:velodyne-1.5.0/velodyne_pointcloud
--DCATKIN_DEVEL_PREFIX=/home/xx/commonspace/velodyne_ws/devel -DCMAKE_INSTALL_PREFIX=/home/xx/commonspace/velodyne_ws/install -G Unix Makefiles
