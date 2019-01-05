@@ -4,6 +4,10 @@ sudo apt-get install ros-kinetic-navigation
 sudo apt-get install ros-kinetic-turtlebot-msgs
 sudo apt-get install ros-kinetic-joy
 
+sudo apt-get install ros-kinetic-velodyne-msgs 
+sudo apt-get install ros-kinetic-velodyne-driver
+
+http://wiki.ros.org/velodyne
 注：先编译有driver-common的包
 **************************************************
 http://www.ncnynl.com/archives/201611/1097.html
