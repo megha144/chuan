@@ -10,7 +10,7 @@ int main(int argc,char** argv)
 {
 	ros::init(argc, argv, "test_flag_pub");
     ros::NodeHandle n;	
-    to_flag_pub = n.advertise<xx_msgs::Flag>("flag_cv_to_nav",1);
+    to_flag_pub = n.advertise<xx_msgs::Flag>("flag_nav_to_cv",1);
     while(ros::ok())
     {
         printf("please input:1:nav or 2:cv\n");
