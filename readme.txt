@@ -1,4 +1,6 @@
 //xx
+// 使用VLP16 进行导航
+
 chuan_nav_ws:
 1.实现定点导航，导航程序运行在tk1上，
 2. ./nav_rviz.sh 可以在control机上查看rviz图。
