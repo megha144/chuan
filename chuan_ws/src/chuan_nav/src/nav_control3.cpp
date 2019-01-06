@@ -94,7 +94,12 @@ void do_3d_lidar()
         {
 			flag_3dlidar_to_cv_status = 0;
            // return ;       //退出后，图像接着继续处理
-		   break;
+
+		xx_msgs::Flag flag_nav_to_3dlidar;
+		flag_nav_to_3dlidar.flag = "3dbox need stop";
+		navto3dlidar_flag_pub.publish(flag_nav_to_3dlidar);    //导航停止， 停止3dbox和3dlidar
+
+		break;
         }
     } 
 }
