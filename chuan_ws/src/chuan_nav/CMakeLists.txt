@@ -208,6 +208,9 @@ target_link_libraries(nav_control ${catkin_LIBRARIES})
 add_executable(test_flag_pub src/test_flag_pub.cpp)
 target_link_libraries(test_flag_pub ${catkin_LIBRARIES})
 
+add_executable(test_flag_3dlidar_pub src/test_flag_3dlidar_pub.cc)
+target_link_libraries(test_flag_3dlidar_pub ${catkin_LIBRARIES})
+
 add_executable(test_flag_sub src/test_flag_sub.cpp)
 target_link_libraries(test_flag_sub ${catkin_LIBRARIES})
 
