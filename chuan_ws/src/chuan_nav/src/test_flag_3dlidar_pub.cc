@@ -31,7 +31,7 @@ int main(int argc,char** argv)
         if(ch == '2')
         {
             xx_msgs::Flag flag_cv;
-            flag_cv.flag = "nav stop,cv start";
+            flag_cv.flag = "3dbox need stop";
             to_flag_pub.publish(flag_cv);
             cout<<flag_cv.flag<<endl;
         }
