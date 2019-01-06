@@ -80,6 +80,9 @@ void box_lidar_yoloCallback(const jsk_recognition_msgs::BoundingBoxArray::ConstP
             cmd->linear.x = (distance_now - distance_goal) * line_scale_x;
             // 朝左了 向右偏， 朝右了，向左偏
             cmd->angular.z = box_msg->boxes[j].pose.position.y * y_scale;
+            
+            if(cmd->linear.x > 0.2) cmd->linear.x = 0.2;
+            if(cmd->angular.z > 0.5) cmd->angular.z = 0.5;
             vel_pub.publish(cmd);
             std::cout<<"box_vx= "<<cmd->linear.x<<"  box_vz= "<<cmd->angular.z<<std::endl;
 
