@@ -131,7 +131,7 @@ void recv_3dlidar_flag_callback(const xx_msgs::Flag::ConstPtr& msg)
 {
     flag_3dlidar_to_cv = msg->flag;
     cout<< flag_3dlidar_to_cv <<endl;
-    if(flag_3dlidar_to_cv == "3dbox need stop")
+    if(flag_3dlidar_to_cv == "3dbox need stop,cv start")
     {
         flag_3dlidar_to_cv_status = 1;
     }
