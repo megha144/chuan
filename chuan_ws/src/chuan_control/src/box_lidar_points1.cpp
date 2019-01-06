@@ -2,7 +2,7 @@
 // box_lidar_points 
 //获取激光点云的box 并跟踪最近的物体 
 //添加控制权交接
-//能控制小车运动
+//能控制小车运动跟随人 测试成功
 
 // darknet_ros_msgs
 #include <jsk_recognition_msgs/BoundingBox.h>
