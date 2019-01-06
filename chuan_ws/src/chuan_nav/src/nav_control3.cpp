@@ -2,7 +2,7 @@
 //测试 定点导航
 // 测试成功
 //测试与图像通信
-
+//添加 3dlidar
 #include "ros/ros.h"
 #include <geometry_msgs/Twist.h>
 #include <geometry_msgs/PoseStamped.h>
@@ -24,6 +24,7 @@ ros::Publisher lidartocv_flag_pub;
 ros::Publisher navto3dlidar_flag_pub;
 ros::Subscriber recv_cv_flag_sub;
 ros::Subscriber recv_3dlidar_flag_sub;
+
 
 bool frist = true;
 int flag_cv2nav_status = 0;   //导航标志
@@ -77,6 +78,7 @@ void send_box_lidar_vel()
 }
 
 
+
 void do_3d_lidar()
 {
 	actionlib_msgs::GoalID empty_goal;
@@ -91,7 +93,8 @@ void do_3d_lidar()
         if(flag_3dlidar_to_cv_status == 1)  //等到3d激光扫描到垃圾且到达垃圾位置附近 退出
         {
 			flag_3dlidar_to_cv_status = 0;
-            return ;       //退出后，图像接着继续处理
+           // return ;       //退出后，图像接着继续处理
+		   break;
         }
     } 
 }
@@ -104,9 +107,7 @@ void do_image()
 	xx_msgs::Flag flag_3dlidar_to_cv;
 	flag_3dlidar_to_cv.flag = "nav stop,cv start";
 	lidartocv_flag_pub.publish(flag_3dlidar_to_cv);   //发布图像控制标志
-
 }
-
 
 std::string flag_cv;
 void recv_cv_flag_callback(const xx_msgs::Flag::ConstPtr& msg)  //接收与图像控制权标记
@@ -120,12 +121,12 @@ void recv_cv_flag_callback(const xx_msgs::Flag::ConstPtr& msg)  //接收与图�
         
 	}
 }
-std::string flag_3dlidar;
+std::string flag_3dlidar_to_cv;
 void recv_3dlidar_flag_callback(const xx_msgs::Flag::ConstPtr& msg)
 {
-    flag_3dlidar = msg->flag;
-    cout<< flag_3dlidar <<endl;
-    if(flag_3dlidar == "3dlidar stop,cv start")
+    flag_3dlidar_to_cv = msg->flag;
+    cout<< flag_3dlidar_to_cv <<endl;
+    if(flag_3dlidar_to_cv == "3dbox need stop")
     {
         flag_3dlidar_to_cv_status = 1;
     }
@@ -219,8 +220,11 @@ int main(int argc,char** argv)
 
     lidartocv_flag_pub = n.advertise<xx_msgs::Flag>("flag_nav_to_cv",1);    //发布控制交接权到图像标记
 	navto3dlidar_flag_pub = n.advertise<xx_msgs::Flag>("flag_nav_to_3dlidar",1); //发布控制权交给3d激光
+	
 	recv_cv_flag_sub = n.subscribe<xx_msgs::Flag>("flag_cv_to_nav",1,recv_cv_flag_callback);  //从图像接收控制权标记
-	recv_3dlidar_flag_sub = n.subscribe<xx_msgs::Flag>("flag_3dlidar_to_cv",1,recv_3dlidar_flag_callback); //从3维激光接收标记
+     //从3维激光接收标记用于停止box cv start
+	recv_3dlidar_flag_sub = n.subscribe<xx_msgs::Flag>("flag_3dlidar_to_cv",1,recv_3dlidar_flag_callback); 
+
 
 	create_all_thread();
 	ros::spin();	
