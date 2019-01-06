@@ -2,7 +2,7 @@
 // box_lidar_points 
 //获取激光点云的box 并跟踪最近的物体 
 //添加控制权交接
-//能控制小车运动跟随人 测试成功
+//能控制小车运动
 
 // darknet_ros_msgs
 #include <jsk_recognition_msgs/BoundingBox.h>
@@ -80,7 +80,7 @@ void box_lidar_yoloCallback(const jsk_recognition_msgs::BoundingBoxArray::ConstP
             cmd->linear.x = (distance_now - distance_goal) * line_scale_x;
             // 朝左了 向右偏， 朝右了，向左偏
             cmd->angular.z = box_msg->boxes[j].pose.position.y * y_scale;
-            
+
             if(cmd->linear.x > 0.2) cmd->linear.x = 0.2;
             if(cmd->angular.z > 0.5) cmd->angular.z = 0.5;
             vel_pub.publish(cmd);
@@ -90,7 +90,7 @@ void box_lidar_yoloCallback(const jsk_recognition_msgs::BoundingBoxArray::ConstP
         else    // box在 < 7m 的位置时 停止
         {
             xx_msgs::Flag flag_3dbox_stop;
-            flag_3dbox_stop.flag = "3dbox need stop";
+            flag_3dbox_stop.flag = "3dbox need stop,cv start";
             flag_lidar_pub.publish(flag_3dbox_stop);   // 发布停止3dbox 标志
             std::cout<<flag_3dbox_stop.flag<< std::endl;    //然后这个程序也就停了
             vel_pub.publish(geometry_msgs::TwistPtr(new geometry_msgs::Twist()));   //stop
