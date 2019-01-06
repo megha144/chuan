@@ -1,6 +1,7 @@
 //xx
 //使用VLP16 进行导航
 //3dlidar box 跟随测试成功
+//标志位跟新表示（nav ->3dlidar -> cv）
 
 chuan_nav_ws:
 1.实现定点导航，导航程序运行在tk1上，
