@@ -217,6 +217,9 @@ void EuClusterCore::cluster_by_distance(pcl::PointCloud<pcl::PointXYZ>::Ptr in_p
 
 void EuClusterCore::point_cb(const sensor_msgs::PointCloud2ConstPtr &in_cloud_ptr)
 {
+    //xx
+ if(flag_3dlidar_stauts ) //启动和关闭3dlidar和 box
+ {
     pcl::PointCloud<pcl::PointXYZ>::Ptr current_pc_ptr(new pcl::PointCloud<pcl::PointXYZ>);
     pcl::PointCloud<pcl::PointXYZ>::Ptr filtered_pc_ptr(new pcl::PointCloud<pcl::PointXYZ>);
 
@@ -236,13 +239,8 @@ void EuClusterCore::point_cb(const sensor_msgs::PointCloud2ConstPtr &in_cloud_pt
         bbox_array.boxes.push_back(global_obj_list[i].bounding_box_);
     }
     bbox_array.header = point_cloud_header_;
-
-   //xx
-   //启动和关闭3dlidar
-    // if(flag_3dlidar_stauts ) 
-    // {
-     pub_bounding_boxs_.publish(bbox_array);
-    // }
+    pub_bounding_boxs_.publish(bbox_array);
+ }
 }
 
 //xx
