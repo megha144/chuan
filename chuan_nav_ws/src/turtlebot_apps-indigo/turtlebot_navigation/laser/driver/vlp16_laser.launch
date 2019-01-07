@@ -2,6 +2,6 @@
   <!-- vlp16 driver -->
   <include file="$(find velodyne_pointcloud)/launch/VLP16_points.launch" />
   
-  <node pkg="tf" type="static_transform_publisher" name="base_to_laser" args="0.0 0.0 0.18 0 0.0 0.0 base_link velodyne 100"/>
+  <node pkg="tf" type="static_transform_publisher" name="base_to_laser" args="0.0 0.0 0.38 0 0.0 0.0 base_link velodyne 100"/>
 
   </launch>
