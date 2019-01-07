@@ -3,6 +3,8 @@
 //获取激光点云的box 并跟踪最近的物体 
 //添加控制权交接
 //能控制小车运动
+// BOX处理完后停止box cv start
+
 
 // darknet_ros_msgs
 #include <jsk_recognition_msgs/BoundingBox.h>
