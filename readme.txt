@@ -11,6 +11,10 @@
 在control上: ./nav_control.sh  ./box_pub.sh  ./box_gensui.sh  
 ./test_pub.sh
 
+快捷启动方式：
+./nav_xx.sh
+./test_pub.sh 开启第一个点
+
 ***************************************8
 chuan_nav_ws:
 1.实现定点导航，导航程序运行在tk1上，
