@@ -169,8 +169,8 @@ target_link_libraries(box_yolo ${catkin_LIBRARIES})
 add_executable(box_lidar_points src/box_lidar_points.cpp)
 target_link_libraries(box_lidar_points ${catkin_LIBRARIES})
 
-add_executable(box_lidar_points1 src/box_lidar_points1.cpp)
-target_link_libraries(box_lidar_points1 ${catkin_LIBRARIES})
+add_executable(box_lidar_gensui src/box_lidar_gensui.cpp)
+target_link_libraries(box_lidar_gensui ${catkin_LIBRARIES})
 
 add_executable(flag_client src/flag_client.cpp)
 target_link_libraries(flag_client ${catkin_LIBRARIES})
