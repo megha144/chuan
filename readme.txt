@@ -3,6 +3,15 @@
 //3dlidar box 跟随测试成功
 //标志位跟新表示（nav ->3dlidar -> cv）
 
+***************************************
+// xx 20190108
+//nav->3dlidar->cv控制权模拟测试成功
+启动:
+在tk1上 ./nav_norviz.sh  (会启动vlp16)
+在control上: ./nav_control.sh  ./box_pub.sh  ./box_gensui.sh  
+./test_pub.sh
+
+***************************************8
 chuan_nav_ws:
 1.实现定点导航，导航程序运行在tk1上，
 2. ./nav_rviz.sh 可以在control机上查看rviz图。
