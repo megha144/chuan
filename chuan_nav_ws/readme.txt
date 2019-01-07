@@ -17,3 +17,6 @@ roslaunch turtlebot_bringup minimal.launch
 roslaunch turtlebot_navigation amcl_hokuyo.launch map_file:=/home/xx/map/lab.yaml
 
 roslaunch turtlebot_rviz_launchers view_navigation.launch
+
+//3维激光导航中加入避障  在costmap_common_params.yaml中修改。
+//
