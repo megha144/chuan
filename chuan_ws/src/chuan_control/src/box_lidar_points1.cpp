@@ -25,7 +25,8 @@
 
 
 ros::Publisher vel_pub;  // 发布速度
-ros::Publisher flag_lidar_pub;  //用于发布停止3d激光点云发布的状态
+ros::Publisher lidartocv_flag_pub;
+ros::Publisher navto3dlidar_flag_pub;
 
 float distance_xy_min,distance_xy_tmp,distance_now;
 int j;
@@ -88,11 +89,17 @@ void box_lidar_yoloCallback(const jsk_recognition_msgs::BoundingBoxArray::ConstP
 
         }
         else    // box在 < 7m 的位置时 停止
-        {
-            xx_msgs::Flag flag_3dbox_stop;
-            flag_3dbox_stop.flag = "3dbox need stop,cv start";
-            flag_lidar_pub.publish(flag_3dbox_stop);   // 发布停止3dbox 标志
-            std::cout<<flag_3dbox_stop.flag<< std::endl;    //然后这个程序也就停了
+        {   
+            xx_msgs::Flag flag_nav_to_3dlidar;
+            flag_nav_to_3dlidar.flag = "3dbox need stop";
+            navto3dlidar_flag_pub.publish(flag_nav_to_3dlidar);  //停止box
+            std::cout<<flag_nav_to_3dlidar.flag<<std::endl;
+
+            xx_msgs::Flag flag_3dlidar_to_cv;
+            flag_3dlidar_to_cv.flag = "nav stop,cv start";
+            lidartocv_flag_pub.publish(flag_3dlidar_to_cv);   //发布图像控制标志
+            std::cout<<flag_3dlidar_to_cv.flag<<std::endl;
+
             vel_pub.publish(geometry_msgs::TwistPtr(new geometry_msgs::Twist()));   //stop
         }
     }
@@ -110,7 +117,8 @@ int main(int argc, char **argv)
  // vel_pub = n.advertise<geometry_msgs::Twist>("cmd_vel_mux/input/teleop",1);
   vel_pub = n1.advertise<geometry_msgs::Twist>("/mobile_base/commands/velocity",100);
 
-  flag_lidar_pub = n.advertise<xx_msgs::Flag>("flag_3dlidar_to_cv",1);  //发布3dlidar停止标志
+  lidartocv_flag_pub = n.advertise<xx_msgs::Flag>("flag_nav_to_cv",1);    //发布控制交接权到图像标记
+  navto3dlidar_flag_pub = n.advertise<xx_msgs::Flag>("flag_nav_to_3dlidar",1); //发布3d激光停止用(2个地方有发布)
 
   ros::spin();
   return 0;
