@@ -33,8 +33,13 @@ int current_point=0;  //当前导航点
 int current_status=0,last_current_status=0;
 double nav_point[3][4]={
 //0,0,0,1,     //yuan dian
+/** hokuyo 室内的两个点
 3.023,-0.458,0.634,0.773,
 3.164,5.525,0.720,0.694,
+**/
+// vlp16 导航点 lab out
+2.168,0.423,0.035,0.999,
+11.377,1.681,0.114,0.993,
 };
 
 int goal_n=0;	
@@ -189,17 +194,17 @@ void statusCallback(const actionlib_msgs::GoalStatusArray::ConstPtr& msg)
 			switch(current_point)
 			{
 				case 0: 
-                  //  do_3d_lidar();
+               //     do_3d_lidar();
                     do_image(); //到达第一个点
 					cout<<"000000000"<<endl;
                     break;
 				case 1: 
-                 //   do_3d_lidar();
+               //    do_3d_lidar();
                     do_image(); //到达第二个点
 					cout<< "11111111111111"<<endl;
                     break;
                 case 2: 
-                   // do_3d_lidar();
+                 //   do_3d_lidar();
                     do_image(); //处理完后回到原点
 					cout<<"222222222"<<endl;
                     break;
