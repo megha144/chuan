@@ -82,8 +82,6 @@ void send_box_lidar_vel()
     }
 }
 
-
-
 void do_3d_lidar()
 {
 	actionlib_msgs::GoalID empty_goal;
@@ -92,32 +90,33 @@ void do_3d_lidar()
     xx_msgs::Flag flag_nav_to_3dlidar;
     flag_nav_to_3dlidar.flag = "nav stop,3dlidar start";
     navto3dlidar_flag_pub.publish(flag_nav_to_3dlidar);    //导航停止，启动3D激光扫描垃圾
-    while(ros::ok())
-    {
-		//一直等待直到3dbox处理完
-        if(flag_3dlidar_to_cv_status == 1)  //等到3d激光扫描到垃圾且到达垃圾位置附近 退出
-        {
-			flag_3dlidar_to_cv_status = 0;
-           // return ;       //退出后，图像接着继续处理
-
-		xx_msgs::Flag flag_nav_to_3dlidar;
-		flag_nav_to_3dlidar.flag = "3dbox need stop";
-		navto3dlidar_flag_pub.publish(flag_nav_to_3dlidar);    //导航停止， 停止3dbox和3dlidar
-
-		break;
-        }
-    } 
+    // while(ros::ok())
+    // {
+	// //	cout<<"wait 3dlidar flag stop!!"<<endl;
+	// 	//一直等待直到3dbox处理完
+    //     if(flag_3dlidar_to_cv_status == 1)  //等到3d激光扫描到垃圾且到达垃圾位置附近 退出
+    //     {
+	// 	flag_3dlidar_to_cv_status = 0;
+    //        // return ;       //退出后，图像接着继续处理
+	// 	xx_msgs::Flag flag_nav_to_3dlidar;
+	// 	flag_nav_to_3dlidar.flag = "3dbox need stop";
+	// 	navto3dlidar_flag_pub.publish(flag_nav_to_3dlidar);    //导航停止， 停止3dbox和3dlidar
+	// 	cout<<flag_nav_to_3dlidar.flag<<endl;
+	// 		//	break;
+	// 		return ;  //中止当前函数
+    //     }
+    // } 
 }
+// 改到在box 处理完后发布
+// void do_image()
+// {
+//     // actionlib_msgs::GoalID empty_goal;
+// 	// cancle_pub.publish(empty_goal); //取消导航
 
-void do_image()
-{
-    // actionlib_msgs::GoalID empty_goal;
-	// cancle_pub.publish(empty_goal); //取消导航
-
-	xx_msgs::Flag flag_3dlidar_to_cv;
-	flag_3dlidar_to_cv.flag = "nav stop,cv start";
-	lidartocv_flag_pub.publish(flag_3dlidar_to_cv);   //发布图像控制标志
-}
+// 	xx_msgs::Flag flag_3dlidar_to_cv;
+// 	flag_3dlidar_to_cv.flag = "nav stop,cv start";
+// 	lidartocv_flag_pub.publish(flag_3dlidar_to_cv);   //发布图像控制标志
+// }
 
 std::string flag_cv;
 void recv_cv_flag_callback(const xx_msgs::Flag::ConstPtr& msg)  //接收与图像控制权标记
@@ -128,19 +127,18 @@ void recv_cv_flag_callback(const xx_msgs::Flag::ConstPtr& msg)  //接收与图�
 	{
 		flag_cv2nav_status =1;
 		cout<<"nav do start"<<endl;
-        
 	}
 }
-std::string flag_3dlidar_to_cv;
-void recv_3dlidar_flag_callback(const xx_msgs::Flag::ConstPtr& msg)
-{
-    flag_3dlidar_to_cv = msg->flag;
-    cout<< flag_3dlidar_to_cv <<endl;
-    if(flag_3dlidar_to_cv == "3dbox need stop,cv start")
-    {
-        flag_3dlidar_to_cv_status = 1;
-    }
-}
+//std::string flag_3dlidar_to_cv;
+// void recv_3dlidar_flag_callback(const xx_msgs::Flag::ConstPtr& msg)
+// {
+//     flag_3dlidar_to_cv = msg->flag;
+//     cout<< flag_3dlidar_to_cv <<endl;
+//     if(flag_3dlidar_to_cv == "3dbox need stop,cv start")
+//     {
+//         flag_3dlidar_to_cv_status = 1;
+//     }
+// }
 
 void *pub_point(void *arg)  //发布dian
 {
@@ -194,18 +192,18 @@ void statusCallback(const actionlib_msgs::GoalStatusArray::ConstPtr& msg)
 			switch(current_point)
 			{
 				case 0: 
-               //     do_3d_lidar();
-                    do_image(); //到达第一个点
+                    do_3d_lidar();
+                //    do_image(); //到达第一个点
 					cout<<"000000000"<<endl;
                     break;
 				case 1: 
-               //    do_3d_lidar();
-                    do_image(); //到达第二个点
+                    do_3d_lidar();
+               //     do_image(); //到达第二个点
 					cout<< "11111111111111"<<endl;
                     break;
                 case 2: 
-                 //   do_3d_lidar();
-                    do_image(); //处理完后回到原点
+                    do_3d_lidar();
+                //    do_image(); //处理完后回到原点
 					cout<<"222222222"<<endl;
                     break;
 			}
@@ -228,12 +226,12 @@ int main(int argc,char** argv)
     cancle_pub = n.advertise<actionlib_msgs::GoalID>("move_base/cancel",10);  //用于取消导航
 	sub_status = n.subscribe("move_base/status",10,statusCallback);	//订阅是否到达目标点
 
-    lidartocv_flag_pub = n.advertise<xx_msgs::Flag>("flag_nav_to_cv",1);    //发布控制交接权到图像标记
+  //  lidartocv_flag_pub = n.advertise<xx_msgs::Flag>("flag_nav_to_cv",1);    //发布控制交接权到图像标记
 	navto3dlidar_flag_pub = n.advertise<xx_msgs::Flag>("flag_nav_to_3dlidar",1); //发布控制权交给3d激光
 	
 	recv_cv_flag_sub = n.subscribe<xx_msgs::Flag>("flag_cv_to_nav",1,recv_cv_flag_callback);  //从图像接收控制权标记
      //从3维激光接收标记用于停止box cv start
-	recv_3dlidar_flag_sub = n.subscribe<xx_msgs::Flag>("flag_3dlidar_to_cv",1,recv_3dlidar_flag_callback); 
+	// recv_3dlidar_flag_sub = n.subscribe<xx_msgs::Flag>("flag_3dlidar_to_cv",1,recv_3dlidar_flag_callback); 
 
 
 	create_all_thread();
