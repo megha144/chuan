@@ -192,7 +192,7 @@ void statusCallback(const actionlib_msgs::GoalStatusArray::ConstPtr& msg)
 			switch(current_point)
 			{
 				case 0: 
-                    do_3d_lidar();
+                    do_3d_lidar();  //3dlidar start
                 //    do_image(); //到达第一个点
 					cout<<"000000000"<<endl;
                     break;
